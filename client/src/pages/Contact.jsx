@@ -8,8 +8,8 @@ const defaultContactFormData = {
   username: "",
   email: "",
   message: "",
-  address: "", // Area Name save hoga
-  mapLink: "", // Google Map Link save hoga
+  address: "", // Area Name
+  mapLink: "", // Google Map Link
   date: "",
   time: "",
 };
@@ -17,7 +17,6 @@ const defaultContactFormData = {
 export const Contact = () => {
   const [contact, setContact] = useState(defaultContactFormData);
   const [userData, setUserData] = useState(true);
-
   const { user } = useAuth();
   const location = useLocation();
 
@@ -48,26 +47,15 @@ export const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validation: Dono fields check kar rahe hain
     if (!contact.address || !contact.mapLink) {
-      return toast.warn("Please select an area AND paste the map link!");
+      return toast.warn("Please select Area and paste Map Link!");
     }
-
-    // Backend ko bhejte waqt dono ko combine kar sakte ho ya alag alag
-    const finalData = {
-        ...contact,
-        // Agar backend ek hi address field mangta hai toh combine kar do:
-        address: `${contact.address} | Map: ${contact.mapLink}` 
-    }
-
     try {
       const response = await fetch("https://gig-swap-hsp-backend.vercel.app/api/form/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(finalData),
+        body: JSON.stringify(contact),
       });
-
       if (response.ok) {
         setContact({ ...defaultContactFormData, username: user.username, email: user.email });
         toast.success("Service Booked Successfully!");
@@ -81,27 +69,13 @@ export const Contact = () => {
 
   return (
     <section className="section-contact">
-      <div className="contact-content container">
-        <h1 className="main-heading">Book Your Service</h1>
-      </div>
-
+      <div className="contact-content container"><h1 className="main-heading">Book Your Service</h1></div>
       <div className="container grid grid-two-cols">
-        <div className="contact-img">
-          <img src="/images/support.png" alt="support" />
-        </div>
-
+        <div className="contact-img"><img src="/images/support.png" alt="support" /></div>
         <section className="section-form">
           <form onSubmit={handleSubmit}>
-            <div>
-              <label>Username</label>
-              <input type="text" name="username" value={contact.username} readOnly />
-            </div>
-
-            <div>
-              <label>Email</label>
-              <input type="email" name="email" value={contact.email} readOnly />
-            </div>
-
+            <div><label>Username</label><input type="text" name="username" value={contact.username} readOnly /></div>
+            <div><label>Email</label><input type="email" name="email" value={contact.email} readOnly /></div>
             <div>
               <label>Services</label>
               <select name="message" value={contact.message} onChange={handleInput} required style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}>
@@ -114,70 +88,31 @@ export const Contact = () => {
                 <option value="Pest Control">Pest Control</option>
               </select>
             </div>
-
-            {/* --- ADDRESS SECTION (Dono niche niche aur mandatory) --- */}
+            {/* ADDRESS SECTION */}
             <div style={{ marginTop: "15px", display: "flex", flexDirection: "column", gap: "15px" }}>
-              
-              {/* Step 1: Select Area */}
               <div>
-                <label style={{ fontWeight: "bold" }}>1. Select Your Area (Mandatory)</label>
-                <select 
-                  name="address" 
-                  value={contact.address} 
-                  onChange={handleInput} 
-                  required 
-                  style={{ width: "100%", padding: "12px", borderRadius: "5px", border: "1px solid #ccc", marginTop: "5px" }}
-                >
-                  <option value="">-- Choose Nearest Area --</option>
+                <label>1. Select Area (Required)</label>
+                <select name="address" value={contact.address} onChange={handleInput} required style={{ width: "100%", padding: "12px", borderRadius: "5px", border: "1px solid #ccc" }}>
+                  <option value="">-- Choose Area --</option>
                   <option value="Shivaji Nagar">Shivaji Nagar</option>
                   <option value="Viman Nagar">Viman Nagar</option>
                   <option value="Kothrud">Kothrud</option>
                   <option value="Hinjewadi">Hinjewadi</option>
-                  <option value="Baner">Baner</option>
-                  <option value="Wakad">Wakad</option>
                 </select>
               </div>
-
-              {/* Step 2: Paste Map Link */}
               <div>
-                <label style={{ fontWeight: "bold" }}>2. Paste Map Link (Mandatory)</label>
-                <div style={{ display: "flex", gap: "8px", marginTop: "5px" }}>
-                  <input 
-                    type="text" 
-                    name="mapLink" 
-                    placeholder="Paste link here..." 
-                    value={contact.mapLink} 
-                    onChange={handleInput}
-                    required 
-                    style={{ flex: 1, padding: "12px", borderRadius: "5px", border: "1px solid #ccc" }}
-                  />
-                  <a 
-                    href="https://www.google.com/maps" 
-                    target="_blank" 
-                    rel="noreferrer"
-                    style={{ background: "#4285F4", color: "#fff", padding: "10px 15px", borderRadius: "5px", textDecoration: "none", fontSize: "14px", fontWeight: "bold", display: "flex", alignItems: "center" }}
-                  >
-                    📍 Maps
-                  </a>
+                <label>2. Paste Map Link (Required)</label>
+                <div style={{ display: "flex", gap: "8px" }}>
+                  <input type="text" name="mapLink" placeholder="Paste link here..." value={contact.mapLink} onChange={handleInput} required style={{ flex: 1, padding: "12px", borderRadius: "5px", border: "1px solid #ccc" }} />
+                  <a href="https://maps.google.com" target="_blank" rel="noreferrer" style={{ background: "#4285F4", color: "#fff", padding: "10px 15px", borderRadius: "5px", textDecoration: "none", fontWeight: "bold" }}>📍 Maps</a>
                 </div>
               </div>
-
             </div>
-
             <div className="grid grid-two-cols" style={{ marginTop: "15px" }}>
-              <div>
-                <label>Date</label>
-                <input type="date" name="date" value={contact.date} onChange={handleInput} min={new Date().toISOString().split("T")[0]} required />
-              </div>
-              <div>
-                <label>Time</label>
-                <input type="time" name="time" value={contact.time} onChange={handleInput} required />
-              </div>
+              <div><label>Date</label><input type="date" name="date" value={contact.date} onChange={handleInput} min={new Date().toISOString().split("T")[0]} required /></div>
+              <div><label>Time</label><input type="time" name="time" value={contact.time} onChange={handleInput} required /></div>
             </div>
-
-            <button type="submit" className="btn-submit" style={{ marginTop: "20px", width: "100%", padding: "14px", fontWeight: "bold" }}>
-              Book Now
-            </button>
+            <button type="submit" className="btn-submit" style={{ marginTop: "20px", width: "100%", padding: "14px", fontWeight: "bold" }}>Book Now</button>
           </form>
         </section>
       </div>

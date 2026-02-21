@@ -64,13 +64,11 @@ export const WorkerContacts = () => {
 
   return (
     <section className="worker-contacts-section">
-      <h1>Booked Services</h1>
+      <h1 className="main-heading">Service Jobs for You</h1>
 
       <div className="container worker-contacts">
         {contactData.map((cur) => {
-          // email agar chahiye toh yahan add kar sakte hain, abhi address add kiya hai
-          const { username, message, address, time, date, _id, status, acceptedBy } = cur;
-
+          const { username, message, address, mapLink, time, date, _id, status, acceptedBy } = cur;
           const isLockedByOthers = acceptedBy && acceptedBy !== user.username;
 
           return (
@@ -80,12 +78,17 @@ export const WorkerContacts = () => {
               <p><strong>Date:</strong> {new Date(date).toLocaleDateString()}</p>
               <p><strong>Time:</strong> {time}</p>
               
-              {/* ✅ Address section Admin panel ke format mein */}
+              {/* ✅ Area aur Clickable Map Link */}
+              <p><strong>Area:</strong> <span style={{color: "#e67e22", fontWeight: "bold"}}>{address}</span></p>
               <p>
-                <strong>Address:</strong>{" "}
-                <a href={address} target="_blank" rel="noreferrer" style={{ color: "#007bff", fontWeight: "bold", textDecoration: "underline" }}>
-                  View Customer Location.
-                </a>
+                <strong>Map Direction:</strong>{" "}
+                {mapLink ? (
+                  <a href={mapLink} target="_blank" rel="noreferrer" style={{ color: "#27ae60", fontWeight: "bold", textDecoration: "underline" }}>
+                    Open Navigation 📍
+                  </a>
+                ) : (
+                  <span>Link not available</span>
+                )}
               </p>
 
               <p>
@@ -108,15 +111,7 @@ export const WorkerContacts = () => {
                       onClick={() => handleStatus(_id, "Accepted")}
                       disabled={status === "Accepted"}
                     >
-                      {status === "Accepted" ? "Accepted" : "Accept"}
-                    </button>
-
-                    <button 
-                      className="btn pending" 
-                      onClick={() => handleStatus(_id, "Pending")}
-                      disabled={status === "Pending" || !status}
-                    >
-                      Pending
+                      {status === "Accepted" ? "Accepted" : "Accept Job"}
                     </button>
 
                     <button 
@@ -124,7 +119,7 @@ export const WorkerContacts = () => {
                       onClick={() => handleStatus(_id, "Completed")}
                       disabled={status === "Completed"}
                     >
-                      Completed
+                      Mark Completed
                     </button>
                   </>
                 )}

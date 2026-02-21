@@ -50,11 +50,11 @@ export const AdminContacts = () => {
 
   return (
     <section className="admin-contacts-section">
-      <h1 className="main-heading">Booked Services</h1>
+      <h1 className="main-heading">Booked Services (Admin Panel)</h1>
 
       <div className="container admin-contacts-grid">
         {contactData.map((curContactData, index) => {
-          const { username, email, message, address, time, date, _id, status, acceptedBy } = curContactData;
+          const { username, email, message, address, mapLink, time, date, _id, status, acceptedBy } = curContactData;
           return (
             <div key={index} className="contact-card-responsive">
               <p><strong>Name:</strong> {username}</p>
@@ -63,11 +63,17 @@ export const AdminContacts = () => {
               <p><strong>Date:</strong> {new Date(date).toLocaleDateString()}</p>
               <p><strong>Time:</strong> {time}</p>
               
+              {/* ✅ Naya Address aur Map Logic */}
+              <p><strong>Area:</strong> {address}</p>
               <p>
-                <strong>Address:</strong>{" "}
-                <a href={address} target="_blank" rel="noreferrer" className="location-link">
-                  View Customer Location.
-                </a>
+                <strong>Location:</strong>{" "}
+                {mapLink ? (
+                  <a href={mapLink} target="_blank" rel="noreferrer" className="location-link" style={{color: "#007bff", fontWeight: "bold", textDecoration: "underline"}}>
+                    View Customer Location 📍
+                  </a>
+                ) : (
+                  <span style={{color: "gray"}}>No Map Link Provided</span>
+                )}
               </p>
 
               <div className="status-box">
@@ -86,9 +92,9 @@ export const AdminContacts = () => {
                 )}
               </div>
 
-              {/* <button className="btn-delete" onClick={() => deleteContactById(_id)}>
+              <button className="btn-delete" style={{marginTop: "10px", background: "#ff4d4d"}} onClick={() => deleteContactById(_id)}>
                 Delete Booking
-              </button> */}
+              </button>
             </div>
           );
         })}
