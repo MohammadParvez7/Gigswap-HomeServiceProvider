@@ -50,7 +50,7 @@ export const AdminContacts = () => {
 
   return (
     <section className="admin-contacts-section">
-      <h1 className="main-heading">Booked Services (Admin Panel)</h1>
+      <h1 className="main-heading">Booked Services</h1>
 
       <div className="container admin-contacts-grid">
         {contactData.map((curContactData, index) => {
@@ -92,9 +92,9 @@ export const AdminContacts = () => {
                 )}
               </div>
 
-              <button className="btn-delete" style={{marginTop: "10px", background: "#ff4d4d"}} onClick={() => deleteContactById(_id)}>
+              {/* <button className="btn-delete" style={{marginTop: "10px", background: "#ff4d4d"}} onClick={() => deleteContactById(_id)}>
                 Delete Booking
-              </button>
+              </button> */}
             </div>
           );
         })}

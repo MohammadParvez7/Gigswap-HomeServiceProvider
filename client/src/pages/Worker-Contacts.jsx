@@ -7,6 +7,16 @@ export const WorkerContacts = () => {
   const [contactData, setContactData] = useState([]);
   const { authorizationToken, user } = useAuth();
 
+  // Railway time (14:30) ko Normal clock time (02:30 PM) mein badalne ke liye
+  const formatTime = (timeStr) => {
+    if (!timeStr) return "N/A";
+    const [hours, minutes] = timeStr.split(":");
+    let h = parseInt(hours);
+    const ampm = h >= 12 ? "PM" : "AM";
+    h = h % 12 || 12; // 0 ko 12 banata hai
+    return `${h}:${minutes} ${ampm}`;
+  };
+
   const getContactsData = async () => {
     try {
       const response = await fetch(
@@ -76,15 +86,16 @@ export const WorkerContacts = () => {
               <p><strong>Customer:</strong> {username}</p>
               <p><strong>Service:</strong> {message}</p>
               <p><strong>Date:</strong> {new Date(date).toLocaleDateString()}</p>
-              <p><strong>Time:</strong> {time}</p>
               
-              {/* ✅ Area aur Clickable Map Link */}
+              {/* ✅ Railway time ko AM/PM mein convert kiya */}
+              <p><strong>Time:</strong> {formatTime(time)}</p>
+              
               <p><strong>Area:</strong> <span style={{color: "#e67e22", fontWeight: "bold"}}>{address}</span></p>
               <p>
                 <strong>Map Direction:</strong>{" "}
                 {mapLink ? (
                   <a href={mapLink} target="_blank" rel="noreferrer" style={{ color: "#27ae60", fontWeight: "bold", textDecoration: "underline" }}>
-                    Open Navigation 📍
+                    Service Location 📍
                   </a>
                 ) : (
                   <span>Link not available</span>
@@ -111,7 +122,17 @@ export const WorkerContacts = () => {
                       onClick={() => handleStatus(_id, "Accepted")}
                       disabled={status === "Accepted"}
                     >
-                      {status === "Accepted" ? "Accepted" : "Accept Job"}
+                      {status === "Accepted" ? "Accepted" : "Accept"}
+                    </button>
+
+                    {/* ✅ Pending Button Wapas Add Kar Diya */}
+                    <button 
+                      className="btn pending" 
+                      style={{ background: "#ffc107", color: "#000" }}
+                      onClick={() => handleStatus(_id, "Pending")}
+                      disabled={status === "Pending" || !status}
+                    >
+                      Pending
                     </button>
 
                     <button 
@@ -119,7 +140,7 @@ export const WorkerContacts = () => {
                       onClick={() => handleStatus(_id, "Completed")}
                       disabled={status === "Completed"}
                     >
-                      Mark Completed
+                      Completed
                     </button>
                   </>
                 )}
