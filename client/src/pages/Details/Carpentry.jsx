@@ -1,10 +1,12 @@
 import React from "react";
 import "./Details.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom"; // ✅ useLocation add kiya
 import { useAuth } from "../../store/auth";
 
 const Carpentry = () => {
   const { isLoggedIn } = useAuth();
+  const location = useLocation(); // ✅ Current path lene ke liye
+
   return (
     <div className="service-detail">
       <div className="sd-header">
@@ -19,13 +21,13 @@ const Carpentry = () => {
           <p className="sd-time">Available: 9:00 AM - 7:00 PM</p>
         </div>
         
-        {/* ✅ Updated Link with Service Parameter */}
+        {/* ✅ Updated Link: Agar login nahi hai toh state mein path bhej rahe hain */}
         {isLoggedIn ? (
           <NavLink to="/contact?service=Carpenter">
             <button className="sd-book-btn">Book Now</button>
           </NavLink>
         ) : (
-          <NavLink to="/login">
+          <NavLink to="/login" state={{ from: location.pathname }}>
             <button className="sd-book-btn">Book Now</button>
           </NavLink>
         )}
@@ -48,7 +50,7 @@ const Carpentry = () => {
           </p>
           <p>
             <strong>Specialties</strong> - "Custom furniture making, wooden
-            flooring installation, door and window repair, cabinetry"
+            flo flooring installation, door and window repair, cabinetry"
           </p>
         </div>
 

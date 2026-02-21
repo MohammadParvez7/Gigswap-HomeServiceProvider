@@ -1,10 +1,12 @@
 import React from "react";
 import "./Details.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom"; // ✅ useLocation add kiya
 import { useAuth } from "../../store/auth";
 
 const Plumbing = () => {
   const { isLoggedIn } = useAuth();
+  const location = useLocation(); // ✅ Current path capture karne ke liye
+
   return (
     <div className="service-detail">
       <div className="sd-header">
@@ -19,13 +21,13 @@ const Plumbing = () => {
           <p className="sd-time">Available: 9:00 AM - 7:00 PM</p>
         </div>
         
-        {/* ✅ Plumbing Parameter linked */}
+        {/* ✅ Logic: Agar login nahi hai toh state mein path bhej rahe hain */}
         {isLoggedIn ? (
           <NavLink to="/contact?service=Plumbing">
             <button className="sd-book-btn">Book Now</button>
           </NavLink>
         ) : (
-          <NavLink to="/login">
+          <NavLink to="/login" state={{ from: location.pathname }}>
             <button className="sd-book-btn">Book Now</button>
           </NavLink>
         )}

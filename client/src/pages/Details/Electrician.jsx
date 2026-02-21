@@ -1,10 +1,12 @@
 import React from "react";
 import "./Details.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom"; // ✅ useLocation import kiya
 import { useAuth } from "../../store/auth";
 
 const Electrician = () => {
   const { isLoggedIn } = useAuth();
+  const location = useLocation(); // ✅ Current location capture karne ke liye
+
   return (
     <div className="service-detail">
       <div className="sd-header">
@@ -19,13 +21,13 @@ const Electrician = () => {
           <p className="sd-time">Available: 9:00 AM - 7:00 PM</p>
         </div>
         
-        {/* URL mein ?service=Electrician add kiya hai */}
         {isLoggedIn ? (
           <NavLink to="/contact?service=Electrician">
             <button className="sd-book-btn">Book Now</button>
           </NavLink>
         ) : (
-          <NavLink to="/login">
+          /* ✅ Login ke baad wapas yahi aane ke liye state pass kiya */
+          <NavLink to="/login" state={{ from: location.pathname }}>
             <button className="sd-book-btn">Book Now</button>
           </NavLink>
         )}
