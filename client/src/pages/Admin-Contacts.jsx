@@ -61,7 +61,9 @@ export const AdminContacts = () => {
               <p><strong>Email:</strong> {email}</p>
               <p><strong>Service:</strong> {message}</p>
               <p><strong>Date:</strong> {new Date(date).toLocaleDateString()}</p>
-              <p><strong>Time:</strong> {time}</p>
+              <p>
+              <strong>Time:</strong> {new Date(`1970-01-01T${time}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+              </p>
               
               {/* ✅ Naya Address aur Map Logic */}
               <p><strong>Area:</strong> {address}</p>
