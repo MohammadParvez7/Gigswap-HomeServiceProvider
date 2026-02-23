@@ -13,7 +13,7 @@ const errorMiddleware=require ("./middlewares/error-middleware");
 
 
 const corsOptions = {
-  origin: " http://localhost:5173",
+  origin: "https://gigswap-home-service-provider-clien.vercel.app/",
   methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
   credentials: true,
 };

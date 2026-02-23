@@ -51,7 +51,7 @@ export const Contact = () => {
       return toast.warn("Please select Area and paste Map Link!");
     }
     try {
-      const response = await fetch("http://localhost:8000/api/form/contact", {
+      const response = await fetch("https://gigswap-home-service-provider-serve.vercel.app//api/form/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(contact),
