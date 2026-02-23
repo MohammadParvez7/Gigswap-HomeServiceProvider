@@ -8,7 +8,7 @@ export const AdminUsers = () => {
 
   const getAllUsersData = async () => {
     try {
-      const response = await fetch("https://gigswap-home-service-provider-serve.vercel.app//api/admin/users", {
+      const response = await fetch("https://gigswap-home-service-provider-serve.vercel.app/api/admin/users", {
         method: "GET",
         headers: {
           Authorization: authorizationToken,

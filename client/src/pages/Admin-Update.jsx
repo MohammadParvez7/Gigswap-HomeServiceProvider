@@ -61,7 +61,7 @@ export const AdminUpdate = () => {
 
     try {
       const response = await fetch(
-        ` https://gigswap-home-service-provider-serve.vercel.app//api/admin/users/update/${params.id}`,
+        ` https://gigswap-home-service-provider-serve.vercel.app/api/admin/users/update/${params.id}`,
         {
           method: "PATCH",
           headers: {
