@@ -8,7 +8,7 @@ export const AdminUsers = () => {
 
   const getAllUsersData = async () => {
     try {
-      const response = await fetch("https://gig-swap-hsp-backend.vercel.app/api/admin/users", {
+      const response = await fetch("http://localhost:8000/api/admin/users", {
         method: "GET",
         headers: {
           Authorization: authorizationToken,
