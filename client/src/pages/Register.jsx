@@ -20,7 +20,7 @@ export const Register = () => {
 
   const { storeTokenInLS } = useAuth();
 
-  const URL = "https://gigswap-home-service-provider-serve.vercel.app/api/auth/register";
+  const URL = "http://localhost:8000/api/auth/register";
 
   const handleInput = (e) => {
     console.log(e);

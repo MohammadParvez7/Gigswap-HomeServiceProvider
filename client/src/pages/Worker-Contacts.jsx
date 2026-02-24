@@ -20,7 +20,7 @@ export const WorkerContacts = () => {
   const getContactsData = async () => {
     try {
       const response = await fetch(
-        "https://gigswap-home-service-provider-serve.vercel.app/api/worker/contacts",
+        "http://localhost:8000/api/worker/contacts",
         {
           method: "GET",
           headers: {
@@ -47,7 +47,7 @@ export const WorkerContacts = () => {
     
     if (isConfirmed) {
       try {
-        const response = await fetch(`https://gigswap-home-service-provider-serve.vercel.app/api/worker/update-status/${id}`, {
+        const response = await fetch(`http://localhost:8000/api/worker/update-status/${id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
