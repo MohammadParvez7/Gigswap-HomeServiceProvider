@@ -15,7 +15,7 @@ export const Login = () => {
   const location = useLocation(); // ✅ Location initialize ki
 
   const { storeTokenInLS } = useAuth();
-  const URL = "http://localhost:8000/api/auth/login";
+  const URL = "https://gigswap-hsp-server.vercel.app/api/auth/login";
 
   const handleInput = (e) => {
     let name = e.target.name;
