@@ -5,4 +5,4 @@
 - Technologies:- React.js , Node.js , Express.js , Mongodb.
 
 # 🔴 LIVE PROJECT LINK:  
-https://gigswap-home-service-provider-clien.vercel.app/
+https://gigswap-hsp-client.vercel.app
