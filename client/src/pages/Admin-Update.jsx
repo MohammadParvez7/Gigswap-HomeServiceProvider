@@ -19,7 +19,7 @@ export const AdminUpdate = () => {
   const getSingleUserData = async (id) => {
     try {
       const response = await fetch(
-        `https://gigswap-home-service-provider-serve.vercel.app//api/admin/users/${params.id}`,
+        `https://gigswap-home-service-provider-serve.vercel.app/api/admin/users/${params.id}`,
         {
           method: "GET",
           headers: {
